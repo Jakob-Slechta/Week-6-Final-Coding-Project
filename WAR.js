@@ -25,7 +25,7 @@ const absoluteCardValue = {
 
 class Deck {
     constructor(cards = newDeck()) {
-        this.cards = cards
+        this.cards = cards;
     }
     shuffle() {
         console.log("Let's shuffle our cards!")
@@ -37,8 +37,10 @@ class Deck {
             //This is sort of like shuffling, but what is mostly happening here is that
             // each card is being swapped to the random index of another card.
         }
+        
     }
-}
+        
+ };
 
 
 class Card {
@@ -56,45 +58,28 @@ function newDeck() {
     })
 }
 
-//This is where we'll be sending both of our player's cards after each turn.
-
-const cardPile = [];
-
-const p1Points = [];
-const p2Points = [];
-
-//And this is our two player's decks.
-
-
-//Right here I'm going to write out all the functions I'll need FOR the game.
-
-
-function draw() {
-    return this.cards.shift();
-    //Shift is used because it takes the first element from an array.
-    //Therefore it's a bit closer to actually drawing a card off the top of the deck.
-};
-
-function cardFlipper() {
-    console.log("Players! Draw your card for the round!")
-    const p1Card = p1Deck.draw()
-    const p2Card = p2Deck.draw()
-
-};
 
 
 
-function discard(card) {
-    this.cardPile.push(card)
-};
+
+let p1Points = 0;
+let p2Points = 0;
+
+//And this is our two player's decks, the cards they draw and play.
+
+let p1Deck, p2Deck;
+
+let p1Card = 0;
+let p2Card = 0;
+
+
+//Right here I'm going to write out the function for checking the round winner!
+
 
 function roundCheck(p1Card, p2Card) {
 return absoluteCardValue[p1Card.value] > absoluteCardValue[p2Card.value];
 }
 
-function gameWin(p1Points, p2Points) {
-   return p1Points.length > p2Points.length;
-}
 
 //Now, we have our deck possible to be created. Let's make our game's start function.
 //It'll run at the beginning in console, as soon as the page is opened the game begins.
@@ -115,32 +100,30 @@ console.log(p1Deck);
 console.log("This is Player 2's Deck!");
 console.log(p2Deck);
 
-for (i = 1; i < 26; i++) {
+for (i = 1; i < 27; i++) {
 console.log("Round " + i);
-cardFlipper()
+console.log("Players! Draw your card for the round!")
+const p1Card = p1Deck.cards.shift();
+const p2Card = p2Deck.cards.shift();
 console.log(p1Card);
 console.log(p2Card);
 
 if (roundCheck(p1Card, p2Card)) {
     console.log("Player 1 wins round " + i);
-    discard(p1Card);
-    discard(p2Card);
-    p1Points.push("W");
+    p1Points = p1Points + 1;
 } else if (roundCheck(p2Card, p1Card)) {
     console.log("Player 2 wins round " + i);
-    discard(p1Card);
-    discard(p2Card);
-    p2Points.push("W");
+    p2Points = p2Points + 1;
 } else {
     console.log("It's a draw!");
 }
 }
 console.log("Alright! Impressive skills on display, but we've reached the end of this game!")
 console.log("Let's see who won!")
-if (gameWin(p1Points, p2Points)) {
+if (p1Points > p2Points) {
     console.log("Player 1 takes the whole game! Congratulations!")
     console.log("Please hit refresh to play again!")
-} else if (gameWin(p2Points, p1Points)) {
+} else if (p2Points > p1Points) {
     console.log("Player 2 takes the whole game! Congratulations!")
     console.log("Please hit refresh to play again!")
 } else {
